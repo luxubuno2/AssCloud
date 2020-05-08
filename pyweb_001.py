@@ -23,7 +23,7 @@ app = Flask(__name__)
 app.secret_key = "adtekdev"
 
 ### LIÊN KẾT TỚI DB MONGO
-MONGO_URI = 'mongodb://db01:csdl001@ds039421.mlab.com:39421/heroku_phqfm0rw'
+MONGO_URI = 'mongodb://db01:csdl001@ds039421.mlab.com:39421/heroku_phqfm0rw?retryWrites=false'
 cluster = MongoClient(MONGO_URI)
 
 db =  cluster.heroku_phqfm0rw  # cluster["heroku_phqfm0rw"]
