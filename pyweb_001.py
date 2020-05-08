@@ -20,6 +20,7 @@ from pymongo import MongoClient
 
 ### Tạo APP
 app = Flask(__name__)
+#, static_url_path='', static_folder='/static'
 app.secret_key = "adtekdev"
 
 ### LIÊN KẾT TỚI DB MONGO
@@ -33,7 +34,7 @@ db =  cluster.heroku_phqfm0rw  # cluster["heroku_phqfm0rw"]
 
 @app.route('/')
 def  index():
-    return "<h1> ATN Shop - WEBsite </h1>"
+    return render_template("index.html")
 
 
 @app.route('/home')
@@ -67,8 +68,10 @@ def  login():
 
 @app.route('/logout', methods=['GET', 'POST'])
 def  logout():
-    session['logged_in_flag'] = False
-    return "LOGOUT"
+    #if session.get('logged_in_flag'):
+    if 'logged_in_flag' in session:
+        session['logged_in_flag'] = False
+    return ""
 
 
 @app.route('/profile')
@@ -77,14 +80,9 @@ def  profile():
 
 @app.route('/products', methods=['GET', 'POST'])
 def products():
-    lpro = (
-        {"name": "Nem", "price" : 333},
-        {"name": "Chả", "price" : 11},
-        {"name": "Giò", "price" : 56},
-        {"name": "Bò", "price" : 78},
-        {"name": "eo", "price" : 89},
-    )
-    return render_template("products.html", productList = lpro)
+    collection = db.products 
+    lpro = collection.find()
+    return render_template("product-listA1.html", productList = lpro)
 
 @app.route('/addProduct', methods=['GET', 'POST'])
 def addProduct():
